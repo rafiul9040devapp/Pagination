@@ -9,8 +9,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuotesViewModel @Inject constructor(repository: QuotesRepository) : ViewModel() {
-
     val quotesList = repository.getQuotes().cachedIn(viewModelScope)
-
-    //.cachedIn(viewModel = this.viewModelScope)
 }

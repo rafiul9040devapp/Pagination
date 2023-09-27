@@ -58,8 +58,9 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:$hiltVersion")
 
     val lifecycleVersion = "2.6.2"
-    implementation("androidx.lifecycle:lifecycle-view-model-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation ("androidx.activity:activity-ktx:1.7.2")
 
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")

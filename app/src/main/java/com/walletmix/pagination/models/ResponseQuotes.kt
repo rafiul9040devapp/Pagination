@@ -1,6 +1,5 @@
 package com.walletmix.pagination.models
 
-
 import com.google.gson.annotations.SerializedName
 
 data class ResponseQuotes(
