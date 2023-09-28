@@ -6,7 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface QuotesApi {
-
     @GET(Constants.QUOTES_END_POINT)
     suspend fun getAllQuotes(@Query("page") page: Int): ResponseQuotes
 }
