@@ -30,10 +30,9 @@ class QuotesPagingSource(private val quotesApi: QuotesApi) :
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, ResponseQuotes.Result>): Int? {
-        return state.anchorPosition?.let {
-            state.closestPageToPosition(it)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
+    override fun getRefreshKey(state: PagingState<Int, ResponseQuotes.Result>) =
+        state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
-    }
 }

@@ -7,15 +7,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import com.walletmix.pagination.R
 import com.walletmix.pagination.databinding.ActivityMainBinding
 import com.walletmix.pagination.paging.LoaderAdapter
 import com.walletmix.pagination.paging.QuotesAdapter
 import com.walletmix.pagination.viewmodel.QuotesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -30,20 +31,27 @@ class MainActivity : AppCompatActivity() {
 
 
         val window: Window = this.window
-        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background)
         WindowCompat.getInsetsController(window,window.decorView).apply {
             isAppearanceLightStatusBars = true
         }
 
         adapter = QuotesAdapter()
-        binding.rcvQuotes.setHasFixedSize(true)
-        binding.rcvQuotes.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = LoaderAdapter(),
-            footer = LoaderAdapter()
-        )
+        binding.rcvQuotes.adapter = adapter
+//        binding.rcvQuotes.setHasFixedSize(true)
+//        binding.rcvQuotes.adapter = adapter.withLoadStateHeaderAndFooter(
+//            header = LoaderAdapter(),
+//            footer = LoaderAdapter()
+//        )
+
+
+
+//        adapter.submitData(lifecycle,it)
 
         viewModel.quotesList.observe(this) {
-            adapter.submitData(lifecycle = lifecycle,it)
+          lifecycleScope.launch {
+              adapter.submitData(it)
+          }
         }
     }
 }
