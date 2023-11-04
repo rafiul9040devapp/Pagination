@@ -4,6 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.walletmix.pagination.api.QuotesApi
 import com.walletmix.pagination.models.ResponseQuotes
+import retrofit2.HttpException
+import java.io.IOException
 
 class QuotesPagingSource(private val quotesApi: QuotesApi) :
     PagingSource<Int, ResponseQuotes.Result>() {
@@ -27,6 +29,10 @@ class QuotesPagingSource(private val quotesApi: QuotesApi) :
 
         } catch (exception: Exception) {
             LoadResult.Error(exception)
+        } catch (e: IOException) {
+            LoadResult.Error(e)
+        } catch (e: HttpException) {
+            LoadResult.Error(e)
         }
     }
 

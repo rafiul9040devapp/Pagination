@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.walletmix.pagination.databinding.ItemQuoteBinding
 import com.walletmix.pagination.models.ResponseQuotes
 
-class QuotesAdapter : PagingDataAdapter<ResponseQuotes.Result, QuotesAdapter.QuotesViewHolder>(Comparator) {
+class QuotesAdapter :
+    PagingDataAdapter<ResponseQuotes.Result, QuotesAdapter.QuotesViewHolder>(Comparator) {
 
 
     inner class QuotesViewHolder(val binding: ItemQuoteBinding) :
@@ -32,21 +33,17 @@ class QuotesAdapter : PagingDataAdapter<ResponseQuotes.Result, QuotesAdapter.Quo
         )
     }
 
-    companion object{
-        private val Comparator = object : DiffUtil.ItemCallback<ResponseQuotes.Result>(){
+    companion object {
+        private val Comparator = object : DiffUtil.ItemCallback<ResponseQuotes.Result>() {
             override fun areItemsTheSame(
                 oldItem: ResponseQuotes.Result,
                 newItem: ResponseQuotes.Result
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
+            ): Boolean = oldItem.id == newItem.id
 
             override fun areContentsTheSame(
                 oldItem: ResponseQuotes.Result,
                 newItem: ResponseQuotes.Result
-            ): Boolean {
-                return oldItem == newItem
-            }
+            ): Boolean = oldItem == newItem
 
         }
     }

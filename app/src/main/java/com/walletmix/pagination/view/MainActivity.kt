@@ -14,6 +14,7 @@ import com.walletmix.pagination.paging.LoaderAdapter
 import com.walletmix.pagination.paging.QuotesAdapter
 import com.walletmix.pagination.viewmodel.QuotesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -36,8 +37,9 @@ class MainActivity : AppCompatActivity() {
             isAppearanceLightStatusBars = true
         }
 
-        adapter = QuotesAdapter()
-        binding.rcvQuotes.adapter = adapter
+        initRecyclerView()
+
+
 //        binding.rcvQuotes.setHasFixedSize(true)
 //        binding.rcvQuotes.adapter = adapter.withLoadStateHeaderAndFooter(
 //            header = LoaderAdapter(),
@@ -48,10 +50,22 @@ class MainActivity : AppCompatActivity() {
 
 //        adapter.submitData(lifecycle,it)
 
-        viewModel.quotesList.observe(this) {
-          lifecycleScope.launch {
-              adapter.submitData(it)
-          }
+        //liveDATA
+//        viewModel.quotesList.observe(this) {
+//          lifecycleScope.launch {
+//              adapter.submitData(it)
+//          }
+//        }
+
+        lifecycleScope.launch {
+            viewModel.getAllQuotes().collectLatest {
+                adapter.submitData(it)
+            }
         }
+    }
+
+    private fun initRecyclerView() {
+        adapter = QuotesAdapter()
+        binding.rcvQuotes.adapter = adapter
     }
 }
